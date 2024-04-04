@@ -11,5 +11,4 @@ pedido1 = Pedido("Lucas", pizza1, 15.3)
 pedido1.addItem(lanche2)
 pedido1.addItem(lanche1)
 
-print(f"Valor do pedido: R${pedido1.calcularValor():.2f}")
-print(f"O troco deve ser: R${pedido1.calcularTroco(150.0):.2f}")
+pedido1.imprimirNota()

@@ -108,13 +108,32 @@ class Pedido:
     def setTaxa(self, taxa):
         self.__taxa = taxa
 
-    def calcularValor(self):
+    def _calcularValor(self):
         total = sum(item.getPrecoUnitario() for item in self.__item)
-        return total + self.__taxa
+        return total
+
+    def _calcularValorComTaxa(self):
+        total = self._calcularValor()
+        return total + self.getTaxa()
     
-    def calcularTroco(self,valorRecebido):
-        total = self.calcularValor()
+    def _calcularTroco(self,valorRecebido):
+        total = self._calcularValor()
         return valorRecebido - total
+    
+    def imprimirNota(self):
+        valor = self._calcularValor()
+        print(f'Cliente: {self.getNome()}')
+        print('compras:')
+        for item in self.__item:
+            print(f'{item.getNome()} R${item.getPrecoUnitario()}')
+        print(f'Valor total sem taxa: R${self._calcularValor():.2f}')
+        print(f'Valor total com taxa: R${self._calcularValorComTaxa():.2f}')
+
+    def imprimirTotal(self):
+        print(f'Total R${self._calcularValor:.2f}')
+
+    def imprimirTotalComTaxa(self):
+        print(f'Valor total incluso taxa R${self._calcularValorComTaxa():.2f}')
 
 
 if __name__ == '__main__':
@@ -124,4 +143,4 @@ if __name__ == '__main__':
     pedido1 = Pedido("Alex", pizza1, 5.0)
     pedido1.addItem(lanche1)
 
-    print(pedido1.calcularValor())
+    print(pedido1._calcularValor())
